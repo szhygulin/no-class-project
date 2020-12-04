@@ -42,6 +42,7 @@ class AddressesNetwork():
         :param file: file object
         :return: null
         '''
+        print(f"Amount of unique addresses is {self.n}")
         for n in range(self.n):
             file.write(f"{n}\t")
             file.write(','.join(map(str, self.A[n])))
