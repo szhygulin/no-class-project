@@ -19,18 +19,16 @@ def input(file):
                 raise ValueError("weight values cannot be less than 0")
         labels.append(label)
         adj_matrix.append(matrix_row)
-    adj_matrix = np.array(adj_matrix)
     return labels, adj_matrix
 
 # L1 distance for computing stopping condition
 def l1Distance(a, b):
-    result = 0
-    for i in range(len(a)):
-        result += abs(b[i] - a[i])
+    result = max(np.absolute(b - a))
     return result
 
 def pageRank(A, nodes, d, epsilon):
     n = len(nodes)
+    A = np.array(A)
     iterations = 0
     # initialize page ranks
     page_rank = [1/n] * n
@@ -46,12 +44,6 @@ def pageRank(A, nodes, d, epsilon):
         # shallow copy will lead to having always prev_page_rank == page_rank
         prev_page_rank = copy.deepcopy(page_rank)
         # calculate next step page ranks
-        #for i in range(n):
-        #    sum_factor = 0.0
-        #    for j in range(n):
-        #        # counting only pages that have link to i, accordingly to their weight, otherwise A[j][i] = 0
-        #        sum_factor += A[j][i] * prev_page_rank[j]
-        #    page_rank[i] = (1 - d) / n + d * sum_factor
         page_rank = first_term + d * np.matmul(A.transpose(), prev_page_rank)
         print(f'iteration {iterations} has L1 distance {l1Distance(page_rank, prev_page_rank)}')
     return iterations, page_rank
