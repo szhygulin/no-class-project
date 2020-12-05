@@ -13,7 +13,7 @@ def input(file):
         matrix_row = []
         for y in row:
             if int(y) >= 0:
-                matrix_row.append(int(y))
+                matrix_row.append(float(y))
             else:
                 raise ValueError("weight values cannot be less than 0")
         labels.append(label)
@@ -30,13 +30,6 @@ def l1Distance(a, b):
 def pageRank(A, nodes, d, epsilon):
     n = len(nodes)
     iterations = 0
-    # compute outbound links for every page
-    outbound_links = []
-    for x in A:
-        links = 0
-        for y in x:
-            links += y
-        outbound_links.append(links)
     # initialize page ranks
     page_rank = [1/n] * n
     # initialize previous step page ranks for calculations of the next step
@@ -49,8 +42,8 @@ def pageRank(A, nodes, d, epsilon):
         for i in range(n):
             sum_factor = 0.0
             for j in range(n):
-                # counting only pages that have link to i, otherwise A[j][i] = 0
-                sum_factor += A[j][i] * prev_page_rank[j] / outbound_links[j]
+                # counting only pages that have link to i, accordingly to their weight, otherwise A[j][i] = 0
+                sum_factor += A[j][i] * prev_page_rank[j]
             page_rank[i] = (1 - d) / n + d * sum_factor
         print(f'iteration {iterations} has L1 distance {l1Distance(page_rank, prev_page_rank)}')
     return iterations, page_rank
