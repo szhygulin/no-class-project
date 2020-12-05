@@ -36,6 +36,16 @@ class AddressesNetwork():
         '''
         self.A[self.addresses[_from]][self.addresses[_to]] += value
 
+    def normalize_matrix(self):
+        """
+        Normilizes matrix's rows to 1
+        :return: null
+        """
+        for (n, x) in enumerate(self.A):
+            weight_sum = sum(x);
+            for i in range(len(x)):
+                self.A[n][i] = float(self.A[n][i]) / weight_sum
+
     def dump_to_file(self, file):
         '''
         stores network in the format required by pagerank algorithm
