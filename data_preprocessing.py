@@ -41,10 +41,12 @@ class AddressesNetwork():
         Normilizes matrix's rows to 1
         :return: null
         """
+        weight_sum = 0
         for (n, x) in enumerate(self.A):
-            weight_sum = sum(x);
-            for i in range(len(x)):
-                self.A[n][i] = float(self.A[n][i]) / weight_sum
+            weight_sum += sum(x);
+        for i in range(self.n):
+            for j in range(self.n):
+                self.A[i][j] = float(self.A[i][j]) / weight_sum
 
     def dump_to_file(self, file):
         '''
