@@ -44,7 +44,8 @@ class AddressesNetwork():
         for (n, x) in enumerate(self.A):
             weight_sum = sum(x);
             for i in range(len(x)):
-                self.A[n][i] = float(self.A[n][i]) / weight_sum
+                if weight_sum != 0:
+                    self.A[n][i] = float(self.A[n][i]) / weight_sum
 
     def dump_to_file(self, file):
         '''
