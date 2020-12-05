@@ -53,30 +53,29 @@ class AddressesNetwork():
 if __name__ == '__main__':
     try:
         input_folder = sys.argv[1]
-        n_files = int(sys.argv[2])
+        i = int(sys.argv[2])
     except:
-        raise ValueError('Not enough i  nput parameters')
+        raise ValueError('Not enough input parameters')
     network = AddressesNetwork()
     # Numeration of files in folders must be consecutive
-    for i in range(n_files):
-        with open(f"{input_folder}/{i}.csv", 'r') as f:
-            x = f.read()
-            y = StringIO(x)
-            reader = csv.reader(y, delimiter=',')
-            # omitting first row
-            fields = next(reader)
-            for (m, row) in enumerate(reader):
-                _from = row[fields.index("from")]
-                _to = row[fields.index("to")]
-                value = row[fields.index("value")]
-                # check if "from" or "to" address appears first time
-                if _from not in network.addresses:
-                    network.add_address(_from)
-                if _to not in network.addresses:
-                    network.add_address(_to)
-                network.add_weight(_from, _to, int(value))
-                if m % 100000 == 0:
-                    print(f"file {i}, {m} rows processed")
+    with open(f"{input_folder}/{i}.csv", 'r') as f:
+        x = f.read()
+        y = StringIO(x)
+        reader = csv.reader(y, delimiter=',')
+        # omitting first row
+        fields = next(reader)
+        for (m, row) in enumerate(reader):
+            _from = row[fields.index("from")]
+            _to = row[fields.index("to")]
+            value = row[fields.index("value")]
+            # check if "from" or "to" address appears first time
+            if _from not in network.addresses:
+                network.add_address(_from)
+            if _to not in network.addresses:
+                network.add_address(_to)
+            network.add_weight(_from, _to, int(value))
+            if m % 100000 == 0:
+                print(f"file {i}, {m} rows processed")
     with open("network.txt", "w") as f:
         network.dump_to_file(f)
 
