@@ -86,6 +86,8 @@ if __name__ == '__main__':
             network.add_weight(_from, _to, int(value))
             if m % 100000 == 0:
                 print(f"file {i}, {m} rows processed")
+    # normalize entries to adjust for transaction size
+    network.normalize_matrix()
     with open("network.txt", "w") as f:
         network.dump_to_file(f)
 
