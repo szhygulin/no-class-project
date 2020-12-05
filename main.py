@@ -81,6 +81,7 @@ if __name__ == '__main__':
     for x in labels:
         node = {'label': x, 'row_index': labels.index(x)}
         nodes.append(node)
+    print('data loaded')
     iterations, page_rank = pageRank(adj_matrix, nodes, d, epsilon)
     # assign nodes corresponding page rank and sort them based on derived value
     for x in nodes:
