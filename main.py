@@ -36,6 +36,7 @@ def pageRank(A, nodes, d, epsilon):
     prev_page_rank = [0] * n
     while l1Distance(page_rank, prev_page_rank) >= epsilon:
         iterations += 1
+        print(f'starting iteration {iterations}')
         # shallow copy will lead to having always prev_page_rank == page_rank
         prev_page_rank = copy.deepcopy(page_rank)
         # calculate next step page ranks
