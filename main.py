@@ -1,5 +1,6 @@
 import sys
 import copy
+import numpy as np
 
 def input(file):
     # reads file and provide input data in corresponding datastructures
@@ -18,6 +19,7 @@ def input(file):
                 raise ValueError("weight values cannot be less than 0")
         labels.append(label)
         adj_matrix.append(matrix_row)
+    adj_matrix = np.array(adj_matrix)
     return labels, adj_matrix
 
 # L1 distance for computing stopping condition
@@ -34,18 +36,23 @@ def pageRank(A, nodes, d, epsilon):
     page_rank = [1/n] * n
     # initialize previous step page ranks for calculations of the next step
     prev_page_rank = [0] * n
+    first_term = [(1 - d) / n] * n
+    page_rank = np.array(page_rank)
+    prev_page_rank = np.array(prev_page_rank)
+    first_term = np.array(first_term)
     while l1Distance(page_rank, prev_page_rank) >= epsilon:
         iterations += 1
         print(f'starting iteration {iterations}')
         # shallow copy will lead to having always prev_page_rank == page_rank
         prev_page_rank = copy.deepcopy(page_rank)
         # calculate next step page ranks
-        for i in range(n):
-            sum_factor = 0.0
-            for j in range(n):
-                # counting only pages that have link to i, accordingly to their weight, otherwise A[j][i] = 0
-                sum_factor += A[j][i] * prev_page_rank[j]
-            page_rank[i] = (1 - d) / n + d * sum_factor
+        #for i in range(n):
+        #    sum_factor = 0.0
+        #    for j in range(n):
+        #        # counting only pages that have link to i, accordingly to their weight, otherwise A[j][i] = 0
+        #        sum_factor += A[j][i] * prev_page_rank[j]
+        #    page_rank[i] = (1 - d) / n + d * sum_factor
+        page_rank = first_term + d * np.matmul(A.transpose(), prev_page_rank)
         print(f'iteration {iterations} has L1 distance {l1Distance(page_rank, prev_page_rank)}')
     return iterations, page_rank
 
