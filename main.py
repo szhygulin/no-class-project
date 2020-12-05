@@ -12,7 +12,7 @@ def input(file):
         row = row.split(',')
         matrix_row = []
         for y in row:
-            if int(y) >= 0:
+            if float(y) >= 0:
                 matrix_row.append(float(y))
             else:
                 raise ValueError("weight values cannot be less than 0")
