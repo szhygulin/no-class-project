@@ -13,6 +13,7 @@ class AddressesNetwork():
         self.addresses = {}                 # index of the address
         self.A = []                         # adjacency matrix
         self.n = 0                          # amount of known addresses
+        self.indexes = {}                   # address of the index
 
     def add_address(self, address):
         '''
@@ -21,6 +22,7 @@ class AddressesNetwork():
         :return: null
         '''
         self.addresses[address] = self.n
+        self.indexes[self.n] = address
         self.n += 1
         for (n, x) in enumerate(self.A):
             self.A[n].append(0)
@@ -42,7 +44,7 @@ class AddressesNetwork():
         :return: null
         """
         for (n, x) in enumerate(self.A):
-            weight_sum = sum(x);
+            weight_sum = sum(x)
             for i in range(len(x)):
                 if weight_sum != 0:
                     self.A[n][i] = float(self.A[n][i]) / weight_sum
@@ -55,7 +57,7 @@ class AddressesNetwork():
         '''
         print(f"Amount of unique addresses is {self.n}")
         for n in range(self.n):
-            file.write(f"{self.addresses[n]}\t")
+            file.write(f"{self.indexes[n]}\t")
             file.write(','.join(map(str, self.A[n])))
             file.write('\n')
 
