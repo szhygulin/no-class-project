@@ -23,3 +23,5 @@ output.txt - path to the output file for result being stored
 
 Program will report 2 lines:
 amount of iterations needed for the program to converge, and sequence of addresses with their ranks sorted in descending order.
+
+address_extractor.py is used to get addresses for nodes reported as top 10.
