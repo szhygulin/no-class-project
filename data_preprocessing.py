@@ -55,7 +55,7 @@ class AddressesNetwork():
         '''
         print(f"Amount of unique addresses is {self.n}")
         for n in range(self.n):
-            file.write(f"{n}\t")
+            file.write(f"{self.addresses[n]}\t")
             file.write(','.join(map(str, self.A[n])))
             file.write('\n')
 
